@@ -20,7 +20,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
  
 import org.kie.api.runtime.KieSession;
- 
+import org.kie.api.runtime.rule.FactHandle;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
@@ -32,12 +33,21 @@ public class GUI extends JFrame {
     private ListaItems lista =  new ListaItems();
     private JTable table;
     private DefaultListModel<Item> listModel;
-    private int linha;
+    private int linha;//linha da tabela
+    private int linhaLista;//linha da lista
     private JFormattedTextField formattedTextField;
     private float sum = 0;
     private int numeroItems;
     private JOptionPane OptionPane = new JOptionPane();
  
+    public int getLinhaLista() {
+		return linhaLista;
+	}
+
+	public void setLinhaLista(int linha) {
+		this.linhaLista = linha;
+	}
+	
     public int getLinha() {
 		return linha;
 	}
@@ -54,6 +64,9 @@ public class GUI extends JFrame {
 		this.sum += sum;
 	}
 
+	public void removeSum(float sum) {
+		this.sum -= sum;
+	}
 	/**
      * Launch the application.
      *
@@ -138,7 +151,7 @@ public class GUI extends JFrame {
                 String nome = (String)table.getValueAt(linha, 2);
                 TipoItem tipo = (TipoItem) table.getValueAt(linha, 3);
                 int stock = (int) table.getValueAt(linha, 4);
-                Item i = new Item(id, preco, nome, tipo, null, stock-1);
+                Item i = new Item(id, preco, nome, tipo, 0, stock-1, true, false);
                 if(stock == 0)
                 {
                     table.setValueAt(0, linha, 4);
@@ -164,8 +177,26 @@ public class GUI extends JFrame {
         });
        
            JTable j;
-        button.setBounds(306, 115, 89, 23);
+        button.setBounds(612, 113, 89, 23);
         contentPane.add(button);
+        
+        JButton btnRomver = new JButton("Remover");
+        btnRomver.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+	    		linhaLista = list2.getSelectedIndex();
+	    		if(list2.getSelectedIndex() >= 0) {
+	            int id = (int) table.getValueAt(linha, 0);
+	            float preco = (float) table.getValueAt(linha, 1);
+	            String nome = (String)table.getValueAt(linha, 2);
+	            TipoItem tipo = (TipoItem) table.getValueAt(linha, 3);
+	            int stock = (int) table.getValueAt(linha, 4);
+	            Item i = new Item(id, preco, nome, tipo, 0, stock+1,false, true);
+        		kSession.insert(i);
+        		kSession.fireAllRules();}
+        	}
+        });
+        btnRomver.setBounds(612, 77, 89, 23);
+        contentPane.add(btnRomver);
    
  
    

@@ -7,7 +7,7 @@ public class Cliente {
 	EstadoCivil estadoCivil;
 	boolean possuiFilhos;
 
-	boolean receberRecomendacaoInicial = false;
+	boolean receberRecomendacaoInicial = true;
 	
 	public boolean isReceberRecomendacaoInicial() {
 		return receberRecomendacaoInicial;

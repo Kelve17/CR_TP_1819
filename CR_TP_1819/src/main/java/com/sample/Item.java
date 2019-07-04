@@ -6,17 +6,57 @@ public class Item {
 	String Nome;
 	TipoItem Tipo;
 	int QuantidadeEmArmazem;
-	Item Complementar;
+	int IdComplementar;
+	boolean AdicionarCarinho = false;
+	boolean RemoverCarinho = false;
 	
-	public Item(int id, float preco, String nome, TipoItem tipo, Item complementar,
+	public Item(int id, float preco, String nome, TipoItem tipo, int complementar,
 			int quantidadeEmArmazem) {
 		super();
 		Id = id;
 		Preco = preco;
 		Nome = nome;
 		Tipo = tipo;
-		Complementar = complementar;
+		IdComplementar = complementar;
 		QuantidadeEmArmazem = quantidadeEmArmazem;
+	}
+	
+	public Item(int id, float preco, String nome, TipoItem tipo, int complementar,
+			int quantidadeEmArmazem, boolean add, boolean rem) {
+		super();
+		Id = id;
+		Preco = preco;
+		Nome = nome;
+		Tipo = tipo;
+		IdComplementar = complementar;
+		QuantidadeEmArmazem = quantidadeEmArmazem;
+		AdicionarCarinho = add;
+		RemoverCarinho = rem;
+	}
+
+
+	public int getIdComplementar() {
+		return IdComplementar;
+	}
+
+	public void setIdComplementar(int idComplementar) {
+		IdComplementar = idComplementar;
+	}
+
+	public boolean isAdicionarCarinho() {
+		return AdicionarCarinho;
+	}
+
+	public void setAdicionarCarinho(boolean adicionarCarinho) {
+		AdicionarCarinho = adicionarCarinho;
+	}
+
+	public boolean isRemoverCarinho() {
+		return RemoverCarinho;
+	}
+
+	public void setRemoverCarinho(boolean removerCarinho) {
+		RemoverCarinho = removerCarinho;
 	}
 
 	public int getId() {
@@ -43,11 +83,11 @@ public class Item {
 	public void setTipo(TipoItem tipo) {
 		Tipo = tipo;
 	}
-	public Item getComplementar() {
-		return Complementar;
+	public int getComplementar() {
+		return IdComplementar;
 	}
-	public void setComplementar(Item complementar) {
-		Complementar = complementar;
+	public void setComplementar(int complementar) {
+		IdComplementar = complementar;
 	}
 	public int getQuantidadeEmArmazem() {
 		return QuantidadeEmArmazem;
