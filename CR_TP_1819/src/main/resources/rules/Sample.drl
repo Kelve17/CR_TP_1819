@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.DefaultListModel;
 import javax.swing.JFormattedTextField;
+import javax.swing.*;
  
  
 global FrameInsercaoDados J1; //variável global da janela; criada no ficheiro de implementacao da janela
@@ -13,11 +14,13 @@ global ListaItems lista;
 global JTable table;
 global DefaultListModel<Item> listModel;
 global JFormattedTextField JTextField;
+global JOptionPane JP;
  
 rule "introduzir items"
     salience 100
     when
         not Item()
+        not Cliente()
     then
         lista.Add(new Item(1,10.0f,"Camisola",TipoItem.Crianca,null,10));
         lista.Add(new Item(2,7.0f,"T-Shirt",TipoItem.Crianca,null,20));
@@ -39,22 +42,12 @@ rule "introduzir items"
         lista.Add(new Item(18,10.0f,"Calções",TipoItem.Homem,null,20));
         lista.Add(new Item(19,8.0f,"Óculos",TipoItem.Homem,null,10));
         lista.Add(new Item(20,12.0f,"Chapéu",TipoItem.Homem,null,20));
- 
+        lista.Add(new Item(21,7.0f,"T-Shirt - A minha mamã é a melhor",TipoItem.Crianca,null,20));
+        lista.Add(new Item(22,7.0f,"T-Shirt - O meu papá é o melhor",TipoItem.Crianca,null,20));
 end
  
- rule "Adicionar Carrinho e Atuzalizar"
-    salience 98
-    when
-        $i : Item()
-    then
-    	J2.setSum($i.getPreco());
-        table.setValueAt($i.getQuantidadeEmArmazem(), J2.getLinha(), 4);
-        listModel.add(0,$i);
-        JTextField.setValue(J2.getSum());
-        retract($i);
- end
  
-//quando não existem dados do paciente, apresenta janela de inserção de dados do mesmo
+ //quando não existem dados do paciente, apresenta janela de inserção de dados do mesmo
  rule "Pede dados do cliente"
     salience 99
     when
@@ -63,51 +56,83 @@ end
         J1.setVisible(true);
  end
  
- //apresenta GUI de compras; se nao houver nenhuma instancia de comprar e houver 1 cliente,
+ 
+  //apresenta GUI de compras; se nao houver nenhuma instancia de comprar e houver 1 cliente,
  // apresenta janela de compras
  rule "Iniciar compra"
     salience 98
     when
-        not Compra()
         Cliente($id : Id)
     then
         J1.setVisible(false);
         J2.setVisible(true);
-        insert(new Compra($id, 0.0f));
  end
  
  
- rule "Recomendar compra de t-shirt de criança - papa melhor"
-    salience 98
+ 
+ rule "Adicionar Carrinho e Atuzalizar"
+    salience 97
     when
-        exists Item()
-        $c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true)
+        $i : Item()
     then
-        System.out.println("masculino com filhos");
+    	J2.setSum($i.getPreco());
+        table.setValueAt($i.getQuantidadeEmArmazem(), J2.getLinha(), 4);
+        listModel.add(0,$i);
+        JTextField.setValue(J2.getSum());
+ end
+ 
+
+
+ 
+ rule "Recomendar compra de t-shirt de criança - papa melhor"
+    salience 96
+    when
+    	$i :  Item()
+        $c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true, receberRecomendacaoInicial == false)
+    then
+    	String[] Options = {"Sim", "Não"};
+    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho uma t-shirt criança («O meu papa é o melhor!»)?", "RECOMENDAÇÃO",
+    	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
+    	if(x == 0){
+    		Item i = new Item(22,7.0f,"T-Shirt - O meu papá é o melhor",TipoItem.Crianca,null,20);
+    		int stock = (int)table.getValueAt(i.getId()-1, 4);
+	    	J2.setSum(i.getPreco());
+        	table.setValueAt(stock-1, i.getId()-1 , 4);
+        	listModel.add(0,i);
+        	JTextField.setValue(J2.getSum());
+    	}
+        retract($i);
+        $c.setReceberRecomendacaoInicial(true);
+        update($c);
  end
  
  rule "Recomendar compra de t-shirt de criança - mama melhor"
-    salience 98
+    salience 96
     when
-        exists Item()
+    	$i :  Item()
         Cliente(sexo == Sexo.Feminino, possuiFilhos == true)
     then
         System.out.println("feminino com filhos");
+                //retract($i);
  end
  
  
  rule "caso n possua filhos mas casado -masculino"
-    salience 97
+    salience 96
     when
+    	$i :  Item()
         Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
     then
         System.out.println("masculino sem filhos");
+                //retract($i);
  end
  
  rule "caso n possua filhos mas casado -feminino"
-    salience 97
+    salience 96
     when
+    	$i :  Item()
         Cliente(sexo == Sexo.Feminino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
     then
         System.out.println("masculino sem filhos");
+                //retract($i);
 end

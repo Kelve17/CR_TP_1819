@@ -31,5 +31,9 @@ public class ListaItems {
 		Items = items;
 	}
 	
-	
+	public int Count() {
+		return Items.size();
+	}
+
 }
+	

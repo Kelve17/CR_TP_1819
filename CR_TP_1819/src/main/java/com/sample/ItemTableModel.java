@@ -10,7 +10,7 @@ public class ItemTableModel extends AbstractTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = -1611358489228589088L;
-	String[] Colunas = new String[] {"ID", "PREÇO", "NOME", "SEXO", "STOCK"};
+	String[] Colunas = new String[] {"ID", "PREÇO", "NOME", "TIPO", "STOCK"};
 	ArrayList<Item> Items;
 	
 	ItemTableModel(ListaItems lista){

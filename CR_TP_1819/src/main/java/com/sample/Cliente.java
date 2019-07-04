@@ -6,7 +6,16 @@ public class Cliente {
 	Sexo sexo;
 	EstadoCivil estadoCivil;
 	boolean possuiFilhos;
+	boolean receberRecomendacaoInicial = false;
 	
+	public boolean isReceberRecomendacaoInicial() {
+		return receberRecomendacaoInicial;
+	}
+
+	public void setReceberRecomendacaoInicial(boolean receberRecomendacaoInicial) {
+		this.receberRecomendacaoInicial = receberRecomendacaoInicial;
+	}
+
 	public Cliente(int id, String nome, Sexo sexo, EstadoCivil estadoCivil, boolean possuiFilhos) {
 		super();
 		Id = id;

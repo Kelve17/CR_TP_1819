@@ -35,6 +35,8 @@ public class GUI extends JFrame {
     private int linha;
     private JFormattedTextField formattedTextField;
     private float sum = 0;
+    private int numeroItems;
+    private JOptionPane OptionPane = new JOptionPane();
  
     public int getLinha() {
 		return linha;
@@ -75,6 +77,7 @@ public class GUI extends JFrame {
     public GUI(KieSession kSession) {
         kSession.setGlobal("J2", this);
         kSession.setGlobal("lista", lista);
+        kSession.setGlobal("JP", OptionPane);
 
         
          
@@ -113,7 +116,7 @@ public class GUI extends JFrame {
         JLabel lblItemsAVenda = new JLabel("Items a venda");
         lblItemsAVenda.setBounds(59, 12, 122, 14);
         contentPane.add(lblItemsAVenda);
-       
+        
         JLabel lblSeuCarinhoDe = new JLabel("Carrinho de Compras");
         lblSeuCarinhoDe.setBounds(430, 12, 122, 14);
         contentPane.add(lblSeuCarinhoDe);
@@ -121,7 +124,6 @@ public class GUI extends JFrame {
         JLabel lblValorDeCompra = new JLabel("Valor de Compra Atual do Carrinho:");
         lblValorDeCompra.setBounds(609, 12, 227, 14);
         contentPane.add(lblValorDeCompra);
-        
         formattedTextField = new JFormattedTextField(0);
         kSession.setGlobal("JTextField", formattedTextField);
         formattedTextField.setBounds(612, 42, 89, 22);
@@ -155,7 +157,8 @@ public class GUI extends JFrame {
         JButton button = new JButton("Terminar");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	JOptionPane.showMessageDialog(null,"Valor total a pagar : "+formattedTextField.getValue()+" €");
+            	numeroItems = listModel.getSize();
+            	OptionPane.showMessageDialog(null,"Valor total a pagar : "+formattedTextField.getValue()+" €\n"+ " Quantidade de items comprados : " + numeroItems );
             	dispose();
             }
         });
