@@ -31,14 +31,9 @@ public class ListaItems {
 		Items = items;
 	}
 	
-<<<<<<< HEAD
 	public int Count() {
 		return Items.size();
 	}
 
 }
 	
-=======
-	
-}
->>>>>>> branch 'master' of https://github.com/Kelve17/CR_TP_1819.git

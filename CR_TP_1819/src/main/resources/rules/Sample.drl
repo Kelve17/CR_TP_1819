@@ -2,7 +2,6 @@ package com.sample
 import com.sample.Main;
 import com.sample.Sexo;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import javax.swing.JTable;
 import javax.swing.DefaultListModel;
 import javax.swing.JFormattedTextField;
@@ -137,83 +136,3 @@ end
         System.out.println("masculino sem filhos");
                 //retract($i);
 end
-=======
-
-
-global FrameInsercaoDados J1; //variável global da janela; criada no ficheiro de implementacao da janela
-global GUI J2;
-global ListaItems lista;
-
-
-rule "introduzir items"
-	salience 100
-	when
-		not Item()
-	then
-		lista.Add(new Item(1,32.4f,"jhs",TipoItem.Crianca,null,10));
-		lista.Add(new Item(2,32.4f,"jhs",TipoItem.Crianca,null,20));
-		lista.Add(new Item(3,32.4f,"jhs",TipoItem.Crianca,null,10));
-		lista.Add(new Item(4,32.4f,"jhs",TipoItem.Crianca,null,20));
-		lista.Add(new Item(5,32.4f,"jhs",TipoItem.Crianca,null,10));
-		lista.Add(new Item(6,32.4f,"jhs",TipoItem.Crianca,null,20));
-
-end
-
-//quando não existem dados do paciente, apresenta janela de inserção de dados do mesmo
- rule "Pede dados do cliente"
-	salience 99
-	when
-		not Cliente()
-	then
-		J1.setVisible(true);
- end
- 
- //apresenta GUI de compras; se nao houver nenhuma instancia de comprar e houver 1 cliente,
- // apresenta janela de compras
- rule "Iniciar compra"
- 	salience 98
- 	when 
- 		not Compra()
- 		Cliente($id : Id)
- 	then
- 		J1.setVisible(false);
- 		J2.setVisible(true);
- 		insert(new Compra($id, 0.0f));
- end
-
-
- rule "Recomendar compra de t-shirt de criança - papa melhor"
-	salience 98
-	when
-		exists Item()
-		$c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true)
-	then
-		System.out.println("masculino com filhos");
- end
-
- rule "Recomendar compra de t-shirt de criança - mama melhor"
-	salience 98
-	when
-		exists Item()
-		Cliente(sexo == Sexo.Feminino, possuiFilhos == true)
-	then
-		System.out.println("feminino com filhos");
- end
- 
- 
- rule "caso n possua filhos mas casado -masculino"
- 	salience 97
- 	when
- 		Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
- 	then
- 		System.out.println("masculino sem filhos");
- end
- 
- rule "caso n possua filhos mas casado -feminino"
- 	salience 97
- 	when
- 		Cliente(sexo == Sexo.Feminino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
- 	then
- 		System.out.println("masculino sem filhos");
-end
->>>>>>> branch 'master' of https://github.com/Kelve17/CR_TP_1819.git
