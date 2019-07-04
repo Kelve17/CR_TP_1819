@@ -6,7 +6,6 @@ public class Cliente {
 	Sexo sexo;
 	EstadoCivil estadoCivil;
 	boolean possuiFilhos;
-<<<<<<< HEAD
 	boolean receberRecomendacaoInicial = false;
 	
 	public boolean isReceberRecomendacaoInicial() {
@@ -17,9 +16,6 @@ public class Cliente {
 		this.receberRecomendacaoInicial = receberRecomendacaoInicial;
 	}
 
-=======
-	
->>>>>>> branch 'master' of https://github.com/Kelve17/CR_TP_1819.git
 	public Cliente(int id, String nome, Sexo sexo, EstadoCivil estadoCivil, boolean possuiFilhos) {
 		super();
 		Id = id;
