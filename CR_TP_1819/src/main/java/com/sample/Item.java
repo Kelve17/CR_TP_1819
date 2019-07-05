@@ -5,11 +5,46 @@ public class Item {
 	float Preco;
 	String Nome;
 	TipoItem Tipo;
+	ClasseRoupa Classe;
 	int QuantidadeEmArmazem;
 	int IdComplementar;
 	boolean AdicionarCarinho = false;
 	boolean RemoverCarinho = false;
 	
+	public ClasseRoupa getClasse() {
+		return Classe;
+	}
+
+	public void setClasse(ClasseRoupa classe) {
+		Classe = classe;
+	}
+
+	public Item(Item item) {
+		this.AdicionarCarinho = item.AdicionarCarinho;
+		this.RemoverCarinho = item.RemoverCarinho;
+		this.Id = item.Id;
+		this.Preco = item.Preco;
+		this.Nome = item.Nome;
+		this.Tipo = item.Tipo;
+		this.Classe = item.Classe;
+		this.QuantidadeEmArmazem = item.QuantidadeEmArmazem;
+		this.IdComplementar = item.IdComplementar;
+	}
+
+	public Item(int id, float preco, String nome, TipoItem tipo, ClasseRoupa classe, int quantidadeEmArmazem,
+			int idComplementar, boolean adicionarCarinho, boolean removerCarinho) {
+		super();
+		Id = id;
+		Preco = preco;
+		Nome = nome;
+		Tipo = tipo;
+		Classe = classe;
+		QuantidadeEmArmazem = quantidadeEmArmazem;
+		IdComplementar = idComplementar;
+		AdicionarCarinho = adicionarCarinho;
+		RemoverCarinho = removerCarinho;
+	}
+
 	public Item(int id, float preco, String nome, TipoItem tipo, int complementar,
 			int quantidadeEmArmazem) {
 		super();
@@ -20,6 +55,7 @@ public class Item {
 		IdComplementar = complementar;
 		QuantidadeEmArmazem = quantidadeEmArmazem;
 	}
+	
 	
 	public Item(int id, float preco, String nome, TipoItem tipo, int complementar,
 			int quantidadeEmArmazem, boolean add, boolean rem) {
@@ -34,6 +70,18 @@ public class Item {
 		RemoverCarinho = rem;
 	}
 
+	public Item(int id, float preco, String nome, TipoItem tipo, ClasseRoupa classe, int i, boolean b,
+			boolean c) {
+		super();
+		Id = id;
+		Preco = preco;
+		Nome = nome;
+		Tipo = tipo;
+		QuantidadeEmArmazem = i;
+		AdicionarCarinho = b;
+		RemoverCarinho = c;
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getIdComplementar() {
 		return IdComplementar;
@@ -99,7 +147,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-	    return Nome+ " " +"--"+ Tipo + "--"+ " "+ Preco+"€";
+	    return Tipo+ " " +"--"+ Classe + "--"+ " "+ Preco+"€";
 	}
 }
 

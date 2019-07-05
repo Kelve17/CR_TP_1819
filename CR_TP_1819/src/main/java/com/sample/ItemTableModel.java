@@ -10,7 +10,7 @@ public class ItemTableModel extends AbstractTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = -1611358489228589088L;
-	String[] Colunas = new String[] {"ID", "PREÇO", "NOME", "TIPO", "STOCK"};
+	String[] Colunas = new String[] {"ID", "PREÇO", "TIPO","CLASSE", "STOCK"};
 	ArrayList<Item> Items;
 	
 	ItemTableModel(ListaItems lista){
@@ -37,12 +37,16 @@ public class ItemTableModel extends AbstractTableModel{
 	      else if (col == 1) {
 	         temp = Items.get(row).getPreco();
 	      }
-	      else if (col == 2) {
+	      else if (col == 20) {
 	         temp = Items.get(row).getNome();
 	      }
-	      else if(col == 3) {
+	      else if(col == 2) {
 	    	  temp = Items.get(row).getTipo();
-	      }else if(col == 4) {
+	      }else if(col == 3) {
+	    	  temp = Items.get(row).getClasse();
+	      }
+
+	      else if(col == 4) {
 	    	  temp = Items.get(row).getQuantidadeEmArmazem();
 	      }
 	      return temp;
