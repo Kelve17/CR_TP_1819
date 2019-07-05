@@ -1,5 +1,8 @@
 package com.sample;
-
+ 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+ 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,9 +13,17 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+ 
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
+
+import java.awt.Color;
+import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
  
 public class GUI extends JFrame {
@@ -161,7 +172,7 @@ public class GUI extends JFrame {
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	numeroItems = listModel.getSize();
-            	OptionPane.showMessageDialog(null,"Valor total a pagar : "+formattedTextField.getValue()+" €\n"+ " Quantidade de items comprados : " + numeroItems );
+            	OptionPane.showMessageDialog(null,"Valor total a pagar : "+String.format("%.2f",formattedTextField.getValue())+" €\n"+ " Quantidade de items comprados : " + numeroItems );
             	dispose();
             }
         });
@@ -174,22 +185,11 @@ public class GUI extends JFrame {
         btnRomver.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
 	    		linhaLista = list2.getSelectedIndex();
-<<<<<<< HEAD
-	    		if(list2.getSelectedIndex() >= 0) 
-	    		{
-		            int id = (int) table.getValueAt(linhaLista,0);
-		            float preco = (float) table.getValueAt(linhaLista, 1);
-		            String nome = (String)table.getValueAt(linhaLista, 2);
-		            TipoItem tipo = (TipoItem) table.getValueAt(linhaLista, 3);
-		            int stock = (int) table.getValueAt(linhaLista, 4);
-		            Item i = new Item(id, preco, nome, tipo, 0, stock+1,false, true);
-=======
 	    		if(linhaLista >= 0) {
 		    		Item i = new Item(listModel.get(linhaLista));
 		    		i.setRemoverCarinho(true);
 		    		i.setAdicionarCarinho(false);
 		    		i.QuantidadeEmArmazem += 1;
->>>>>>> branch 'master' of https://github.com/Kelve17/CR_TP_1819.git
 	        		kSession.insert(i);
 	        		kSession.fireAllRules();
         		}

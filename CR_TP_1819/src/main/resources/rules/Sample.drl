@@ -55,13 +55,13 @@ rule "Introduzir items"
     	lista.Add(new Item(23,0.99f,null,TipoItem.Homem,ClasseRoupa.Roupa_Interior,10,14, false, false));
     	lista.Add(new Item(24,0.99f,null,TipoItem.Mulher,ClasseRoupa.Roupa_Interior,10,15, false, false));
 
-    	lista.Add(new Item(25,5.99f,null,TipoItem.Crianca,ClasseRoupa.Chapeus,10,37, false, false));
-    	lista.Add(new Item(26,6.99f,null,TipoItem.Homem,ClasseRoupa.Chapeus,10,39, false, false));
-    	lista.Add(new Item(27,6.99f,null,TipoItem.Mulher,ClasseRoupa.Chapeus,10,40, false, false));
+    	lista.Add(new Item(25,5.99f,null,TipoItem.Crianca,ClasseRoupa.Chapeus,10,28, false, false));
+    	lista.Add(new Item(26,6.99f,null,TipoItem.Homem,ClasseRoupa.Chapeus,10,29, false, false));
+    	lista.Add(new Item(27,6.99f,null,TipoItem.Mulher,ClasseRoupa.Chapeus,10,30, false, false));
     	
-    	lista.Add(new Item(28,45.99f,null,TipoItem.Crianca,ClasseRoupa.Oculos,10,33, false, false));
-    	lista.Add(new Item(29,66.99f,null,TipoItem.Homem,ClasseRoupa.Oculos,10,35, false, false));
-    	lista.Add(new Item(30,66.99f,null,TipoItem.Mulher,ClasseRoupa.Oculos,10,36, false, false));
+    	lista.Add(new Item(28,45.99f,null,TipoItem.Crianca,ClasseRoupa.Oculos,10,25, false, false));
+    	lista.Add(new Item(29,66.99f,null,TipoItem.Homem,ClasseRoupa.Oculos,10,26, false, false));
+    	lista.Add(new Item(30,66.99f,null,TipoItem.Mulher,ClasseRoupa.Oculos,10,27, false, false));
 end
  
  
@@ -171,7 +171,8 @@ end
     	$i :  Item(AdicionarCarinho == true)
         Cliente(possuiFilhos == false, estadoCivil == EstadoCivil.Solteiro_a)
     then
-        insert(new Recomendacao("Recomendar o item complementar",$i));
+    	Item item = lista.GetItemComplementar($i.getIdComplementar());
+        insert(new Recomendacao("Recomendar o item complementar",item));
         retract($i);
  end
  
@@ -182,9 +183,8 @@ end
  	 	$r : Recomendacao()
         Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Solteiro_a)
  	then
- 		Item complementar = lista.GetItemComplementar($r.getItem().getIdComplementar());
  		String[] Options = {"Sim", "Não"};
-    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho o item complementar "+complementar.getClasse()+" para "+ complementar.getTipo()+" ?", "RECOMENDAÇÃO",
+    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho o item complementar "+$r.getItem().getClasse()+" para "+ $r.getItem().getTipo()+" ?", "RECOMENDAÇÃO",
     	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
     	if(x == 0){
 			for(int i = 0; i < lista.getItems().size(); i++){
