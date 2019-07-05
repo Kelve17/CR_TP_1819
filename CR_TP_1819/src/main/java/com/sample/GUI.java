@@ -1,8 +1,5 @@
 package com.sample;
- 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
- 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,17 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
- 
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.rule.FactHandle;
-
-import java.awt.Color;
-import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
  
 public class GUI extends JFrame {
@@ -184,15 +173,17 @@ public class GUI extends JFrame {
         btnRomver.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
 	    		linhaLista = list2.getSelectedIndex();
-	    		if(list2.getSelectedIndex() >= 0) {
-	            int id = (int) table.getValueAt(linha, 0);
-	            float preco = (float) table.getValueAt(linha, 1);
-	            String nome = (String)table.getValueAt(linha, 2);
-	            TipoItem tipo = (TipoItem) table.getValueAt(linha, 3);
-	            int stock = (int) table.getValueAt(linha, 4);
-	            Item i = new Item(id, preco, nome, tipo, 0, stock+1,false, true);
-        		kSession.insert(i);
-        		kSession.fireAllRules();}
+	    		if(list2.getSelectedIndex() >= 0) 
+	    		{
+		            int id = (int) table.getValueAt(linhaLista,0);
+		            float preco = (float) table.getValueAt(linhaLista, 1);
+		            String nome = (String)table.getValueAt(linhaLista, 2);
+		            TipoItem tipo = (TipoItem) table.getValueAt(linhaLista, 3);
+		            int stock = (int) table.getValueAt(linhaLista, 4);
+		            Item i = new Item(id, preco, nome, tipo, 0, stock+1,false, true);
+	        		kSession.insert(i);
+	        		kSession.fireAllRules();
+        		}
         	}
         });
         btnRomver.setBounds(612, 77, 89, 23);
