@@ -214,7 +214,7 @@ end
  rule "Recomendar item complementar"
  	salience 95
  	when
- 	 	$r : Recomendacao()
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() != 0)
         Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Solteiro_a)
  	then
  		String[] Options = {"Sim", "Não"};
@@ -240,10 +240,37 @@ end
 end
 
 
+ rule "Recomendar item complementar - indisponivel"
+ 	salience 95
+ 	when
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() == 0)
+        Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Solteiro_a)
+ 	then
+ 		String[] Options = {"Sim", "Não"};
+    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho o item complementar "+$r.getItem().getClasse()+" para "+ $r.getItem().getTipo()+" ?", "RECOMENDAÇÃO",
+    	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
+    	if(x == 0){
+			for(int i = 0; i < lista.getItems().size(); i++){
+				if(lista.getItems().get(i).getId() == $r.getItem().getId()){
+    				JP.showMessageDialog(J2, "Item indisponível!", "ERRO", JP.ERROR_MESSAGE);
+    			}
+    		}
+    		
+	    	J2.setSum($r.getItem().getPreco());
+	        JTextField.setValue(J2.getSum());
+        	listModel.add(0,$r.getItem());
+    	}
+    	
+    	retract($r);
+ 	
+end
+
+
+
  rule "Recomendar mesmo item mas com sexo oposto"
  	salience 95
  	when
- 	 	$r : Recomendacao()
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() != 0)
         Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
  	then
  		String[] Options = {"Sim", "Não"};
@@ -268,12 +295,36 @@ end
     	
 end
 
- 
+ rule "Recomendar mesmo item mas com sexo oposto-indisponivel"
+ 	salience 95
+ 	when
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() == 0)
+        Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
+ 	then
+ 		String[] Options = {"Sim", "Não"};
+    	int x = JP.showOptionDialog(J2,"Também deseja adicionar ao carrinho um item do tipo "+$r.getItem().getClasse()+" para "+ $r.getItem().getTipo()+" ?", "RECOMENDAÇÃO",
+    	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
+    	if(x == 0){
+    		for(int i = 0; i < lista.getItems().size(); i++){
+				if(lista.getItems().get(i).getId() == $r.getItem().getId()){
+    				JP.showMessageDialog(J2, "Item indisponível!", "ERRO", JP.ERROR_MESSAGE);
+    			}
+    		}
+    		
+	    	J2.setSum($r.getItem().getPreco());
+	        JTextField.setValue(J2.getSum());
+        	listModel.add(0,$r.getItem());
+    	}
+    	
+    	retract($r);
+    	
+end
+
  
  rule "Recomendar meu papa o melhor"
  	salience 95
  	when
- 		$r : Recomendacao()
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() != 0)
  		$c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true)
  	then
  	 	String[] Options = {"Sim", "Não"};
@@ -298,11 +349,28 @@ end
     	retract($r);
  end
  
+  rule "Recomendar meu papa o melhor - indisponível"
+ 	salience 95
+ 	when
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() == 0)
+ 		$c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true)
+ 	then
+ 	 	String[] Options = {"Sim", "Não"};
+    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho uma camisola criança («O meu papa é o melhor!»)?", "RECOMENDAÇÃO",
+    	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
+    	if(x == 0){
+    		JP.showMessageDialog(J2, "Item indisponível!", "ERRO", JP.ERROR_MESSAGE);
+    	}
+        $c.setPossuiFilhos(false);
+        update($c);
+    	retract($r);
+ end
+ 
  
   rule "Recomendar compra de t-shirt de criança - mama melhor"
  	salience 95
  	when
- 		$r : Recomendacao()
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() != 0)
         $c : Cliente(sexo == Sexo.Feminino, possuiFilhos == true)
  	then
  	 	String[] Options = {"Sim", "Não"};
@@ -314,6 +382,23 @@ end
         	table.setValueAt(stock-1, $r.getItem().getId()-1 , 4);
         	listModel.add(0,$r.getItem());
         	JTextField.setValue(J2.getSum());
+    	}
+        $c.setPossuiFilhos(false);
+        update($c);
+    	retract($r);
+ end
+ 
+   rule "Recomendar compra de t-shirt de criança - mama melhor- indisponível"
+ 	salience 95
+ 	when
+ 		$r : Recomendacao(getItem().getQuantidadeEmArmazem() == 0)
+        $c : Cliente(sexo == Sexo.Feminino, possuiFilhos == true)
+ 	then
+ 	 	String[] Options = {"Sim", "Não"};
+    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho uma t-shirt criança («A minha mamã é a melhor!»)?", "RECOMENDAÇÃO",
+    	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
+    	if(x == 0){
+    		JP.showMessageDialog(J2, "Item indisponível!", "ERRO", JP.ERROR_MESSAGE);
     	}
         $c.setPossuiFilhos(false);
         update($c);
