@@ -93,6 +93,7 @@ public class GUI extends JFrame {
         contentPane.setLayout(null);
         //adicionar nas regras
         tableModel = new ItemTableModel(lista);
+        kSession.setGlobal("tableModel", tableModel);
        
        
         table = new JTable(tableModel);
@@ -105,7 +106,7 @@ public class GUI extends JFrame {
        
  
        
-        scrollPane1.setBounds(10, 37, 290, 300);
+        scrollPane1.setBounds(10, 37, 380, 300);
         contentPane.add(scrollPane1);
        
         JScrollPane scrollPane2 = new JScrollPane();
@@ -135,25 +136,25 @@ public class GUI extends JFrame {
         btnAdicionarAoCarinho.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 setLinha(table.getSelectedRow());
-                int id = (int) table.getValueAt(linha, 0);
-                float preco = (float) table.getValueAt(linha, 1);
-                String nome = (String)table.getValueAt(linha, 2);
-                TipoItem tipo = (TipoItem) table.getValueAt(linha, 3);
-                int stock = (int) table.getValueAt(linha, 4);
-                Item i = new Item(id, preco, nome, tipo, 0, stock-1, true, false);
-                if(stock == 0)
-                {
-                    table.setValueAt(0, linha, 4);
-                }
-                else {
-                    kSession.insert(i);
-                    kSession.fireAllRules();
+                if(linha >= 0) {
+	                Item i = new Item(tableModel.Items.get(getLinha()));
+	                i.setAdicionarCarinho(true);
+		    		i.setRemoverCarinho(false);
+	                i.QuantidadeEmArmazem -= 1;
+	                if(tableModel.Items.get(getLinha()).getQuantidadeEmArmazem() == 0)
+	                {
+	                    table.setValueAt(0, linha, 4);
+	                }
+	                else {
+	                    kSession.insert(i);
+	                    kSession.fireAllRules();
+	                }
                 }
                
                
             }
         });
-        btnAdicionarAoCarinho.setBounds(306, 63, 89, 23);
+        btnAdicionarAoCarinho.setBounds(129, 350, 89, 23);
         contentPane.add(btnAdicionarAoCarinho);
        
         JButton button = new JButton("Terminar");
@@ -173,6 +174,7 @@ public class GUI extends JFrame {
         btnRomver.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
 	    		linhaLista = list2.getSelectedIndex();
+<<<<<<< HEAD
 	    		if(list2.getSelectedIndex() >= 0) 
 	    		{
 		            int id = (int) table.getValueAt(linhaLista,0);
@@ -181,6 +183,13 @@ public class GUI extends JFrame {
 		            TipoItem tipo = (TipoItem) table.getValueAt(linhaLista, 3);
 		            int stock = (int) table.getValueAt(linhaLista, 4);
 		            Item i = new Item(id, preco, nome, tipo, 0, stock+1,false, true);
+=======
+	    		if(linhaLista >= 0) {
+		    		Item i = new Item(listModel.get(linhaLista));
+		    		i.setRemoverCarinho(true);
+		    		i.setAdicionarCarinho(false);
+		    		i.QuantidadeEmArmazem += 1;
+>>>>>>> branch 'master' of https://github.com/Kelve17/CR_TP_1819.git
 	        		kSession.insert(i);
 	        		kSession.fireAllRules();
         		}

@@ -11,6 +11,7 @@ public class ListaItems {
 		Items = new ArrayList<Item>();
 	}
 	
+	
 	public void Add(Item i) {
 		Items.add(i);
 	}
@@ -33,6 +34,25 @@ public class ListaItems {
 	
 	public int Count() {
 		return Items.size();
+	}
+	
+	//buscar o mesmo que o item escolhido mas para o sexo oposto na lista dos items
+	public Item MesmoItemSexoOposto(Item i) {
+    	for(int k = 0; k < Items.size(); k++){
+			if(Items.get(k).getClasse() == i.getClasse() && (Items.get(k).getTipo() != TipoItem.Crianca && Items.get(k).getTipo() != i.getTipo())){
+				return Items.get(k);
+			}
+		}
+    	return null;
+	}
+	
+	public Item GetItemComplementar(int id) {
+    	for(int k = 0; k < Items.size(); k++){
+			if(Items.get(k).getId() == id){
+				return Items.get(k);
+			}
+		}
+    	return null;
 	}
 
 }

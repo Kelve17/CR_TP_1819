@@ -13,6 +13,7 @@ global GUI J2;
 global ListaItems lista;
 global JTable table;
 global DefaultListModel<Item> listModel;
+global ItemTableModel tableModel;
 global JFormattedTextField JTextField;
 global JOptionPane JP;
  
@@ -22,28 +23,45 @@ rule "Introduzir items"
         not Item()
         not Cliente()
     then
-        lista.Add(new Item(1,10.0f,"Camisola",TipoItem.Crianca,4,10));
-        lista.Add(new Item(2,7.0f,"T-Shirt",TipoItem.Crianca,4,20));
-        lista.Add(new Item(3,9.0f,"Saia",TipoItem.Crianca,4,10));
-        lista.Add(new Item(4,15.0f,"Calças",TipoItem.Crianca,4,20));
-        lista.Add(new Item(5,6.0f,"Chapéu",TipoItem.Crianca,4,10));
-        lista.Add(new Item(6,20.0f,"Casaco",TipoItem.Crianca,4,20));
-        lista.Add(new Item(7,13.0f,"Camisola",TipoItem.Mulher,4,10));
-        lista.Add(new Item(8,10.0f,"Blusa",TipoItem.Mulher,4,20));
-        lista.Add(new Item(9,15.0f,"Saia",TipoItem.Mulher,4,10));
-        lista.Add(new Item(10,20.0f,"Vestido",TipoItem.Mulher,4,20));
-        lista.Add(new Item(11,20.0f,"Calças",TipoItem.Mulher,4,10));
-        lista.Add(new Item(12,30.0f,"Casaco",TipoItem.Mulher,4,20));
-        lista.Add(new Item(13,8.0f,"Óculos",TipoItem.Mulher,4,10));
-        lista.Add(new Item(14,20.0f,"Calças",TipoItem.Homem,4,20));
-        lista.Add(new Item(15,25.0f,"Camisa",TipoItem.Homem,4,10));
-        lista.Add(new Item(16,15.0f,"Camisola",TipoItem.Homem,4,20));
-        lista.Add(new Item(17,10.0f,"T-Shirt",TipoItem.Homem,4,10));
-        lista.Add(new Item(18,10.0f,"Calções",TipoItem.Homem,4,20));
-        lista.Add(new Item(19,8.0f,"Óculos",TipoItem.Homem,4,10));
-        lista.Add(new Item(20,12.0f,"Chapéu",TipoItem.Homem,4,20));
-        lista.Add(new Item(21,7.0f,"T-Shirt - A minha mamã é a melhor",TipoItem.Crianca,4,20));
-        lista.Add(new Item(22,7.0f,"T-Shirt - O meu papá é o melhor",TipoItem.Crianca,4,20));
+    	lista.Add(new Item(1,8.99f,null,TipoItem.Crianca,ClasseRoupa.Camisola,10,4, false, false));
+    	lista.Add(new Item(2,10.99f,null,TipoItem.Homem,ClasseRoupa.Camisola,10,5, false, false));
+    	lista.Add(new Item(3,10.99f,null,TipoItem.Mulher,ClasseRoupa.Camisola,10,6, false, false));
+    	
+    	lista.Add(new Item(4,6.99f,null,TipoItem.Crianca,ClasseRoupa.Calcoes,10,1, false, false));
+    	lista.Add(new Item(5,7.99f,null,TipoItem.Homem,ClasseRoupa.Calcoes,10,2, false, false));
+    	lista.Add(new Item(6,7.99f,null,TipoItem.Mulher,ClasseRoupa.Calcoes,10,3, false, false));
+    	
+    	lista.Add(new Item(7,26.99f,null,TipoItem.Crianca,ClasseRoupa.Calcas,10,10, false, false));
+    	lista.Add(new Item(8,27.99f,null,TipoItem.Homem,ClasseRoupa.Calcas,10,11, false, false));
+    	lista.Add(new Item(9,27.99f,null,TipoItem.Mulher,ClasseRoupa.Calcas,10,12, false, false));
+    	
+    	lista.Add(new Item(10,16.99f,null,TipoItem.Crianca,ClasseRoupa.Camisas,10,7, false, false));
+    	lista.Add(new Item(11,17.99f,null,TipoItem.Homem,ClasseRoupa.Camisas,10,8, false, false));
+    	lista.Add(new Item(12,17.99f,null,TipoItem.Mulher,ClasseRoupa.Camisas,10,9, false, false));
+    	
+    	lista.Add(new Item(13,1.99f,null,TipoItem.Crianca,ClasseRoupa.Meias,10,16, false, false));
+    	lista.Add(new Item(14,2.99f,null,TipoItem.Homem,ClasseRoupa.Meias,10,17, false, false));
+    	lista.Add(new Item(15,2.99f,null,TipoItem.Mulher,ClasseRoupa.Meias,10,18, false, false));
+    	
+    	lista.Add(new Item(16,11.99f,null,TipoItem.Crianca,ClasseRoupa.Sapatos,10,13, false, false));
+    	lista.Add(new Item(17,22.99f,null,TipoItem.Homem,ClasseRoupa.Sapatos,10,14, false, false));
+    	lista.Add(new Item(18,22.99f,null,TipoItem.Mulher,ClasseRoupa.Sapatos,10,15, false, false));
+    	
+    	lista.Add(new Item(19,16.99f,null,TipoItem.Crianca,ClasseRoupa.Sapatilhas,10,13, false, false));
+    	lista.Add(new Item(20,29.99f,null,TipoItem.Homem,ClasseRoupa.Sapatilhas,10,14, false, false));
+    	lista.Add(new Item(21,29.99f,null,TipoItem.Mulher,ClasseRoupa.Sapatilhas,10,15, false, false));
+    	
+    	lista.Add(new Item(22,0.99f,null,TipoItem.Crianca,ClasseRoupa.Roupa_Interior,10,13, false, false));
+    	lista.Add(new Item(23,0.99f,null,TipoItem.Homem,ClasseRoupa.Roupa_Interior,10,14, false, false));
+    	lista.Add(new Item(24,0.99f,null,TipoItem.Mulher,ClasseRoupa.Roupa_Interior,10,15, false, false));
+
+    	lista.Add(new Item(25,5.99f,null,TipoItem.Crianca,ClasseRoupa.Chapeus,10,37, false, false));
+    	lista.Add(new Item(26,6.99f,null,TipoItem.Homem,ClasseRoupa.Chapeus,10,39, false, false));
+    	lista.Add(new Item(27,6.99f,null,TipoItem.Mulher,ClasseRoupa.Chapeus,10,40, false, false));
+    	
+    	lista.Add(new Item(28,45.99f,null,TipoItem.Crianca,ClasseRoupa.Oculos,10,33, false, false));
+    	lista.Add(new Item(29,66.99f,null,TipoItem.Homem,ClasseRoupa.Oculos,10,35, false, false));
+    	lista.Add(new Item(30,66.99f,null,TipoItem.Mulher,ClasseRoupa.Oculos,10,36, false, false));
 end
  
  
@@ -76,7 +94,14 @@ end
         $i : Item(AdicionarCarinho == true)
     then
     	J2.setSum($i.getPreco());
-        table.setValueAt($i.getQuantidadeEmArmazem(), J2.getLinha(), 4);
+    	for(int i = 0; i < lista.getItems().size(); i++){
+			if(lista.getItems().get(i).getId() == $i.getId()){
+    			int valor =  lista.getItems().get(i).getQuantidadeEmArmazem() - 1;
+    			lista.getItems().get(i).setQuantidadeEmArmazem(valor);
+		    	tableModel.fireTableCellUpdated(i, 4);
+    			break;
+    		}
+    	}
         listModel.add(0,$i);
         JTextField.setValue(J2.getSum());
  end
@@ -88,7 +113,14 @@ end
         $i : Item(RemoverCarinho == true)
     then
     	J2.removeSum($i.getPreco());
-    	table.setValueAt($i.getQuantidadeEmArmazem(), $i.getId()-1 , 4);
+    	for(int i = 0; i < lista.getItems().size(); i++){
+			if(lista.getItems().get(i).getId() == $i.getId()){
+    			int valor =  lista.getItems().get(i).getQuantidadeEmArmazem() + 1;
+    			lista.getItems().get(i).setQuantidadeEmArmazem(valor);
+    			tableModel.fireTableCellUpdated(i, 4);
+    			break;
+    		}
+    	}
         listModel.remove(J2.getLinhaLista());
         JTextField.setValue(J2.getSum());
         retract($i);
@@ -101,9 +133,10 @@ end
     salience 96
     when
     	$i :  Item(AdicionarCarinho == true)
-        $c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true, receberRecomendacaoInicial == true)
+        $c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true)
     then
-    	insert(new Recomendacao("Recomendar camisola meu papa melhor",new Item(22,7.0f,"T-Shirt - O meu papá é o melhor",TipoItem.Crianca,0,20)));
+        Item i = new Item(1,8.99f,"O Meu papa é o melhor",TipoItem.Crianca,ClasseRoupa.Camisola,10,5, false, false);
+    	insert(new Recomendacao("Recomendar camisola meu papa melhor",i));
         retract($i);
  end
  
@@ -112,31 +145,93 @@ end
  	salience 96
     when
         $i :  Item(AdicionarCarinho == true)
-        $c : Cliente(sexo == Sexo.Feminino, possuiFilhos == true, receberRecomendacaoInicial == true)
+        $c : Cliente(sexo == Sexo.Feminino, possuiFilhos == true)
     then
-        insert(new Recomendacao("Recomendar camisola minha mama melhor",new Item(21,7.0f,"T-Shirt - A minha mamã é a melhor",TipoItem.Crianca,0,20)));
+        Item i = new Item(1,8.99f,"A minha mamã é a melhor",TipoItem.Crianca,ClasseRoupa.Camisola,10,5, false, false);
+    	insert(new Recomendacao("Recomendar camisola meu papa melhor",i));
         retract($i);
  end
  
   
- rule "caso n possua filhos mas casado -masculino"
+ rule "Sem filhos mas casado(a)"
     salience 96
     when
-    	$i :  Item()
-        Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
+    	$i :  Item(AdicionarCarinho == true, Tipo != TipoItem.Crianca)
+        Cliente(possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
     then
-        System.out.println("masculino sem filhos");
-                //retract($i);
+    	Item item = lista.MesmoItemSexoOposto($i);
+        insert(new Recomendacao("Recomendar mesmo item para sexo oposto",item));
+        retract($i);
  end
  
- rule "caso n possua filhos mas casado -feminino"
+ 
+  rule "Sem filhos e não casado(a)"
     salience 96
     when
-    	$i :  Item()
-        Cliente(sexo == Sexo.Feminino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
+    	$i :  Item(AdicionarCarinho == true)
+        Cliente(possuiFilhos == false, estadoCivil == EstadoCivil.Solteiro_a)
     then
-        System.out.println("masculino sem filhos");
-                //retract($i);
+        insert(new Recomendacao("Recomendar o item complementar",$i));
+        retract($i);
+ end
+ 
+ 
+ rule "Recomendar item complementar"
+ 	salience 95
+ 	when
+ 	 	$r : Recomendacao()
+        Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Solteiro_a)
+ 	then
+ 		Item complementar = lista.GetItemComplementar($r.getItem().getIdComplementar());
+ 		String[] Options = {"Sim", "Não"};
+    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho o item complementar "+complementar.getClasse()+" para "+ complementar.getTipo()+" ?", "RECOMENDAÇÃO",
+    	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
+    	if(x == 0){
+			for(int i = 0; i < lista.getItems().size(); i++){
+				if(lista.getItems().get(i).getId() == $r.getItem().getId()){
+	    			int valor =  lista.getItems().get(i).getQuantidadeEmArmazem() - 1;
+	    			lista.getItems().get(i).setQuantidadeEmArmazem(valor);
+	    			tableModel.fireTableCellUpdated(i, 4);
+	    			break;
+    			}
+    		}
+    		
+	    	J2.setSum($r.getItem().getPreco());
+	        JTextField.setValue(J2.getSum());
+        	listModel.add(0,$r.getItem());
+    	}
+    	
+    	retract($r);
+ 	
+end
+
+
+ rule "Recomendar mesmo item mas com sexo oposto"
+ 	salience 95
+ 	when
+ 	 	$r : Recomendacao()
+        Cliente(sexo == Sexo.Masculino, possuiFilhos == false, estadoCivil == EstadoCivil.Casado_a)
+ 	then
+ 		String[] Options = {"Sim", "Não"};
+    	int x = JP.showOptionDialog(J2,"Também deseja adicionar ao carrinho um item do tipo "+$r.getItem().getClasse()+" para "+ $r.getItem().getTipo()+" ?", "RECOMENDAÇÃO",
+    	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
+    	if(x == 0){
+    		for(int i = 0; i < lista.getItems().size(); i++){
+				if(lista.getItems().get(i).getId() == $r.getItem().getId()){
+	    			int valor =  lista.getItems().get(i).getQuantidadeEmArmazem() - 1;
+	    			lista.getItems().get(i).setQuantidadeEmArmazem(valor);
+	    			tableModel.fireTableCellUpdated(i, 4);
+	    			break;
+    			}
+    		}
+    		
+	    	J2.setSum($r.getItem().getPreco());
+	        JTextField.setValue(J2.getSum());
+        	listModel.add(0,$r.getItem());
+    	}
+    	
+    	retract($r);
+    	
 end
 
  
@@ -145,19 +240,26 @@ end
  	salience 95
  	when
  		$r : Recomendacao()
- 		$c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true, receberRecomendacaoInicial == true)
+ 		$c : Cliente(sexo == Sexo.Masculino, possuiFilhos == true)
  	then
  	 	String[] Options = {"Sim", "Não"};
-    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho uma t-shirt criança («O meu papa é o melhor!»)?", "RECOMENDAÇÃO",
+    	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho uma camisola criança («O meu papa é o melhor!»)?", "RECOMENDAÇÃO",
     	JOptionPane.DEFAULT_OPTION,JP.QUESTION_MESSAGE,null,Options, Options[0]);
     	if(x == 0){
-    		int stock = (int)table.getValueAt($r.getItem().getId()-1, 4);
+	    	for(int i = 0; i < lista.getItems().size(); i++){
+				if(lista.getItems().get(i).getId() == $r.getItem().getId()){
+	    			int valor =  lista.getItems().get(i).getQuantidadeEmArmazem() - 1;
+	    			lista.getItems().get(i).setQuantidadeEmArmazem(valor);
+	    			tableModel.fireTableCellUpdated(i, 4);
+	    			break;
+    			}
+    		}
+    		
 	    	J2.setSum($r.getItem().getPreco());
-        	table.setValueAt(stock-1, $r.getItem().getId()-1 , 4);
+	        JTextField.setValue(J2.getSum());
         	listModel.add(0,$r.getItem());
-        	JTextField.setValue(J2.getSum());
     	}
-        $c.setReceberRecomendacaoInicial(false);
+        $c.setPossuiFilhos(false);
         update($c);
     	retract($r);
  end
@@ -167,7 +269,7 @@ end
  	salience 95
  	when
  		$r : Recomendacao()
-        $c : Cliente(sexo == Sexo.Feminino, possuiFilhos == true, receberRecomendacaoInicial == true)
+        $c : Cliente(sexo == Sexo.Feminino, possuiFilhos == true)
  	then
  	 	String[] Options = {"Sim", "Não"};
     	int x = JP.showOptionDialog(J2,"Deseja adicionar ao carrinho uma t-shirt criança («A minha mamã é a melhor!»)?", "RECOMENDAÇÃO",
@@ -179,7 +281,7 @@ end
         	listModel.add(0,$r.getItem());
         	JTextField.setValue(J2.getSum());
     	}
-        $c.setReceberRecomendacaoInicial(false);
+        $c.setPossuiFilhos(false);
         update($c);
     	retract($r);
  end
