@@ -20,8 +20,6 @@ public class Main {
         	FrameInsercaoDados J1 = new FrameInsercaoDados(kSession);
         	GUI J2 = new GUI(kSession);
 
-            // go !
-
             //kSession.insert();
             kSession.fireAllRules();
         } catch (Throwable t) {

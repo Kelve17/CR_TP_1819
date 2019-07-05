@@ -6,6 +6,8 @@ import javax.swing.JTable;
 import javax.swing.DefaultListModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.*;
+import java.util.*;
+import java.io.*;
  
  
 global FrameInsercaoDados J1; //variável global da janela; criada no ficheiro de implementacao da janela
@@ -17,7 +19,39 @@ global ItemTableModel tableModel;
 global JFormattedTextField JTextField;
 global JOptionPane JP;
  
-rule "Introduzir items"
+ 
+rule "Ler Items do ficheiro"
+	salience 100
+	when
+        not Item()
+        not Cliente()
+	then
+		Scanner ler = new Scanner(System.in);
+		FileReader ficheiro = new FileReader("dados.txt");
+		BufferedReader lerFicheiro = new BufferedReader(ficheiro);
+		String linha = lerFicheiro.readLine();
+		while (true) {
+			linha = lerFicheiro.readLine();
+			if (linha == null)
+				break;
+			String[] campos = linha.split(",");
+			lista.Add(new Item(
+				Integer.parseInt(campos[0]), 
+				Float.parseFloat(campos[1]), 
+				(String) campos[2],
+				TipoItem.valueOf(campos[3]),
+			    ClasseRoupa.valueOf(campos[4]),
+			    Integer.parseInt(campos[5]),
+			    Integer.parseInt(campos[6]),
+			    Boolean.valueOf(campos[7]),
+			    Boolean.valueOf(campos[8]))
+			    );
+		}
+	
+end
+
+/*
+rule "Introduzir items manualmente"
     salience 100
     when
         not Item()
@@ -44,7 +78,7 @@ rule "Introduzir items"
     	lista.Add(new Item(15,2.99f,null,TipoItem.Mulher,ClasseRoupa.Meias,10,18, false, false));
     	
     	lista.Add(new Item(16,11.99f,null,TipoItem.Crianca,ClasseRoupa.Sapatos,10,13, false, false));
-    	lista.Add(new Item(17,22.99f,null,TipoItem.Homem,ClasseRoupa.Sapatos,10,14, false, false));
+    	lista.Add(new Item(17,22.99f,null,TipoItem.Homem,ClasseRoupa.Sapatos,8,14, false, false));
     	lista.Add(new Item(18,22.99f,null,TipoItem.Mulher,ClasseRoupa.Sapatos,10,15, false, false));
     	
     	lista.Add(new Item(19,16.99f,null,TipoItem.Crianca,ClasseRoupa.Sapatilhas,10,13, false, false));
@@ -63,7 +97,7 @@ rule "Introduzir items"
     	lista.Add(new Item(29,66.99f,null,TipoItem.Homem,ClasseRoupa.Oculos,10,26, false, false));
     	lista.Add(new Item(30,66.99f,null,TipoItem.Mulher,ClasseRoupa.Oculos,10,27, false, false));
 end
- 
+*/ 
  
  //quando não existem dados do paciente, apresenta janela de inserção de dados do mesmo
  rule "Pede dados do cliente"
